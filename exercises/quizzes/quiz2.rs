@@ -26,12 +26,30 @@ enum Command {
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function as described above.
-    // pub fn transformer(input: ???) -> ??? { ??? }
-}
 
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        let mut result: Vec<String> = vec![];
+        for element in input {
+            match element {
+                (msg, Command::Uppercase) => result.push(msg.to_uppercase()),  
+                (msg, Command::Trim) => result.push(msg.trim().to_string()),
+                (msg, Command::Append(n)) => 
+                {
+                    let mut msg = msg.clone(); 
+                    for _ in 0..n{
+                        msg.push_str("bar");
+                    }
+                    result.push(msg);
+                },
+            }
+        }
+        result
+    }// TODO: Complete the function as described above.
+     // pub fn transformer(input: ???) -> ??? { ??? }
+}
 fn main() {
     // You can optionally experiment here.
+    
 }
 
 #[cfg(test)]
@@ -39,7 +57,7 @@ mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
     // use ???;
     use super::Command;
-
+    use crate::my_module::transformer;
     #[test]
     fn it_works() {
         let input = vec![
@@ -53,10 +71,10 @@ mod tests {
         assert_eq!(
             output,
             [
-                "HELLO",
-                "all roads lead to rome!",
-                "foobar",
-                "barbarbarbarbarbar",
+            "HELLO",
+            "all roads lead to rome!",
+            "foobar",
+            "barbarbarbarbarbar",
             ]
         );
     }
